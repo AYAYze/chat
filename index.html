@@ -1,0 +1,53 @@
+<html>
+<head>
+<script>
+let ws = new WebSocket("ws://127.0.0.1:3000");
+ws.addEventListener('message', event =>{
+console.log(`너 : ${event.data}`)
+  let text = document.createTextNode(event.data);
+let div = document.getElementById("m");
+//div.innerHTML = '';
+//div.appendChild("너: " + text);
+let br = document.createElement("br");
+div.appendChild(br);
+})
+
+function send(){
+  let ms = document.getElementById("dd").value;
+  ws.send(ms);
+  console.log(`나: ${ms}`);
+
+	clear()
+}
+
+
+function enter(){
+	if(window.event.keyCode == 13){
+	send()
+	clear()
+	}
+}
+
+function clear(){
+	document.getElementById("dd").value = ''	
+}
+
+
+</script>
+</head>
+<body>
+<div id="clock">
+</div>
+<input type="text" placeholder="메시지를 입력" id="dd" onkeyup="enter()">
+<input type="button" onclick="send()" id="ms" value="보내기" >
+<div id="m">
+</div>
+
+
+<script>
+setInterval(()=>{
+document.getElementById("clock").innerHTML = new Date().toLocaleTimeString()
+}, 1000);
+</script>
+</body>
+</html>
